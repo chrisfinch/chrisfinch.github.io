@@ -1,10 +1,12 @@
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin'),
+    webpack = require('webpack');
 
 module.exports = {
     entry: {
         'bundle': './src/js/main',
         'style': './src/styles/main.scss'
     },
+    devtool: 'source-map',
     output: {
         path: './built',
         filename: "[name].js"
@@ -23,6 +25,11 @@ module.exports = {
        ]
     },
     plugins: [
-        new ExtractTextPlugin('[name].css', { allChunks: true })
+        new ExtractTextPlugin('[name].css', { allChunks: true }),
+        new webpack.ProvidePlugin({
+            $: "jquery",
+            jQuery: "jquery",
+            "window.jQuery": "jquery"
+        })
     ]
 };
